@@ -16,9 +16,21 @@ class TestFix(unittest.TestCase):
         for n in no:
             self.assertFalse(contains_3_or_more_numbers_in_a_row(n))
 
-    def test_remove_protein_homolog(self):
+    def test_remove_protein_homolog1(self):
         anno = "Transmembrane protein C6orf70 homolog (Fragment)"
         expected = "Transmembrane protein C6orf70 (Fragment)"
+        actual = remove_protein_homolog(anno)
+        self.assertEqual(expected, actual)
+
+    def test_remove_protein_homolog2(self):
+        anno = "DnaJ protein homolog 1"
+        expected = "DnaJ 1"
+        actual = remove_protein_homolog(anno)
+        self.assertEqual(expected, actual)
+
+    def test_remove_protein_homolog3(self):
+        anno = "Neurogenic locus notch homolog protein 3"
+        expected = "Neurogenic locus notch 3"
         actual = remove_protein_homolog(anno)
         self.assertEqual(expected, actual)
 
