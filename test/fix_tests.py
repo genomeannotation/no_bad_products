@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
 import unittest
-from src.fix import contains_3_or_more_numbers_in_a_row, remove_protein_homolog
+from src.fix import contains_3_or_more_numbers_in_a_row,\
+        remove_protein_homolog, fix_plural
 
 class TestFix(unittest.TestCase):
 
@@ -33,6 +34,11 @@ class TestFix(unittest.TestCase):
         expected = "Neurogenic locus notch 3"
         actual = remove_protein_homolog(anno)
         self.assertEqual(expected, actual)
+
+    def test_fix_plural_no_change(self):
+        no_change = ["Protein crumbs", "PHD finger protein rhinoceros"]
+        for anno in no_change:
+            self.assertEqual(anno, fix_plural(anno))
 
 
 ##########################
