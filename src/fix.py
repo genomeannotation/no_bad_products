@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import re
-from plurals import keep_terminal_s
+from src.plurals import keep_terminal_s
 
 def contains_3_or_more_numbers_in_a_row(word):
     numcount = 0
@@ -34,3 +34,9 @@ def fix_plural(anno):
     else:
         # TODO
         return "idk"
+
+def remove_fragment(anno):
+    fields = anno.strip().split()
+    if fields[-1].startswith("(Fragment"):
+        fields = fields[:-1]
+    return " ".join(fields)

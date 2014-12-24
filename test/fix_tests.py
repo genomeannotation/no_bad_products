@@ -2,7 +2,7 @@
 
 import unittest
 from src.fix import contains_3_or_more_numbers_in_a_row,\
-        remove_protein_homolog, fix_plural
+        remove_protein_homolog, fix_plural, remove_fragment
 
 class TestFix(unittest.TestCase):
 
@@ -39,6 +39,12 @@ class TestFix(unittest.TestCase):
         no_change = ["Protein crumbs", "PHD finger protein rhinoceros"]
         for anno in no_change:
             self.assertEqual(anno, fix_plural(anno))
+
+    def test_remove_fragment(self):
+        annos = ["kDa antigen (Fragment)", "Collagen alpha-2(I) chain (Fragments)", "Protein crumbs"]
+        expected = ["kDa antigen", "Collagen alpha-2(I) chain", "Protein crumbs"]
+        for i, anno in enumerate(annos):
+            self.assertEqual(expected[i], remove_fragment(anno))
 
 
 ##########################
