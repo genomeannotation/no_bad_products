@@ -2,7 +2,8 @@
 
 import unittest
 from src.fix import contains_3_or_more_numbers_in_a_row,\
-        remove_protein_homolog, fix_plural, remove_fragment
+        remove_protein_homolog, fix_plural, remove_fragment,\
+        remove_kDa
 
 class TestFix(unittest.TestCase):
 
@@ -46,6 +47,13 @@ class TestFix(unittest.TestCase):
         for i, anno in enumerate(annos):
             self.assertEqual(expected[i], remove_fragment(anno))
 
+    def test_remove_kDa(self):
+        annos = ["12 kDa FK506-binding protein", 
+                "Centriolar coiled-coil protein of 110 kDa", "Protein crumbs"]
+        expected = ["FK506-binding protein", "Centriolar coiled-coil protein", 
+                "Protein crumbs"]
+        for i, anno in enumerate(annos):
+            self.assertEqual(expected[i], remove_kDa(anno))
 
 ##########################
 def suite():
