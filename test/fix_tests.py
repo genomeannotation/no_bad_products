@@ -34,6 +34,13 @@ class TestFix(unittest.TestCase):
         for i, anno in enumerate(annos):
             self.assertEqual(expected[i], fix_anno(anno))
 
+    def test_fix_anno_multiple_errors(self):
+        annos = ["300 kDa antigen AG231 (Fragment)",
+                "Transmembrane protein C6orf70 homolog (Fragment)"]
+        expected = ["antigen AG231", "Transmembrane protein C6orf70"]
+        for i, anno in enumerate(annos):
+            self.assertEqual(expected[i], fix_anno(anno))
+
     def test_fix_anno_from_dict(self):
         annos = ["EMILIN-2", 
                 "Staphylococcal nuclease domain-containing protein 1"]
