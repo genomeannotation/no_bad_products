@@ -40,6 +40,10 @@ def remove_fragment(anno):
         fields = fields[:-1]
     return " ".join(fields)
 
+def remove_string_containing_underscore(anno):
+    anno = re.sub("\S*_\S*", "", anno)
+    return remove_extra_whitespace(anno)
+
 def remove_kDa(anno):
     anno = re.sub("of [0-9]* kDa", "", anno)
     anno = re.sub("[0-9]* kDa", "", anno)

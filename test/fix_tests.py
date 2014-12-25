@@ -3,7 +3,8 @@
 import unittest
 from src.fix import contains_3_or_more_numbers_in_a_row,\
         remove_protein_homolog, remove_fragment,\
-        remove_kDa, remove_gene_optionally_followed_by_numbers, fix_anno
+        remove_kDa, remove_gene_optionally_followed_by_numbers,\
+        remove_string_containing_underscore, fix_anno
 
 class TestFix(unittest.TestCase):
 
@@ -99,6 +100,17 @@ class TestFix(unittest.TestCase):
         for i, anno in enumerate(annos):
             self.assertEqual(expected[i], 
                     remove_gene_optionally_followed_by_numbers(anno))
+
+    def test_remove_string_containing_underscore(self):
+        annos = ["Putative metal-dependent hydrolase BCE_2729",
+                "putative N-acetyltransferase YPO3031/y1452/YP_2654",
+                "putative oxidoreductase TM_0325"]
+        expected = ["Putative metal-dependent hydrolase",
+                "putative N-acetyltransferase",
+                "putative oxidoreductase"]
+        for i, anno in enumerate(annos):
+            self.assertEqual(expected[i],
+                    remove_string_containing_underscore(anno))
 
 
 ##########################

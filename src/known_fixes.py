@@ -8,6 +8,9 @@ known_fixes = {
         "Staphylococcal nuclease domain-containing protein 1": "Nuclease domain-containing protein 1",
         "Genome polyprotein": "polyprotein",
         "Genome polyprotein (Fragment)": "polyprotein",
-        "Genome polyprotein 1": "polyprotein 1"
+        "Genome polyprotein 1": "polyprotein 1",
+        "Apolipophorins": "Apolipophorin",
+        "Drosulfakinins": "Drosulfakinin",
+        "Tachykinins": "Tachykinin",
 }
 
