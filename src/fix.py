@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
 import re
-from src.plurals import keep_terminal_s
+from src.whitelist import whitelist
+from src.known_fixes import known_fixes
 
 def remove_extra_whitespace(line):
     # make sure we didn't leave extra whitespace
@@ -31,13 +32,6 @@ def remove_protein_homolog(line):
         line = re.sub("homolog", "", line)
     return remove_extra_whitespace(line)
 
-def fix_plural(anno):
-    if anno in keep_terminal_s:
-        return anno
-    else:
-        # TODO
-        return "idk"
-
 def remove_fragment(anno):
     fields = anno.strip().split()
     if fields[-1].startswith("(Fragment"):
@@ -48,3 +42,18 @@ def remove_kDa(anno):
     anno = re.sub("of [0-9]* kDa", "", anno)
     anno = re.sub("[0-9]* kDa", "", anno)
     return remove_extra_whitespace(anno)
+
+def fix_anno(anno):
+    # Do nothing if we know it's okay
+    if anno in whitelist:
+        print("it's in the whitelist!" + anno)
+        return anno
+    # If we've fixed it by hand before, we know the answer
+    elif anno in known_fixes:
+        return known_fixes[anno]
+    # Otherwise, patch and duct tape ...
+    else:
+        anno = remove_fragment(anno)
+        anno = remove_protein_homolog(anno)
+        anno = remove_kDa(anno)
+        return anno

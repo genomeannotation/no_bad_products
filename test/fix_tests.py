@@ -2,13 +2,45 @@
 
 import unittest
 from src.fix import contains_3_or_more_numbers_in_a_row,\
-        remove_protein_homolog, fix_plural, remove_fragment,\
-        remove_kDa
+        remove_protein_homolog, remove_fragment,\
+        remove_kDa, fix_anno
 
 class TestFix(unittest.TestCase):
 
     def setUp(self):
         pass
+
+    def test_fix_anno_no_change(self):
+        annos = ["Zinc finger protein 800",
+                "Uncharacterized protein LOC285141",
+                "Transmembrane and TPR repeat-containing protein CG4341",
+                "putative WD repeat-containing protein alr3466",
+                "Protein FAM116B",
+                "Protein crumbs",
+                "Zygotic gap protein knirps"]
+        for anno in annos:
+            self.assertEqual(anno, fix_anno(anno))
+
+    def test_fix_anno_single_error(self):
+        annos = ["O-acetyl-ADP-ribose deacetylase C6orf130 homolog",
+                "Kinase D-interacting substrate of 220 kDa",
+                "putative E3 ubiquitin-protein ligase DDB_G0283893",
+                "UPF0202 protein (Fragment)"]
+
+        expected = ["O-acetyl-ADP-ribose deacetylase C6orf130",
+            "Kinase D-interacting substrate",
+            "putative E3 ubiquitin-protein ligase DDB_G0283893",
+            "UPF0202 protein"]
+        for i, anno in enumerate(annos):
+            self.assertEqual(expected[i], fix_anno(anno))
+
+    def test_fix_anno_from_dict(self):
+        annos = ["EMILIN-2", 
+                "Staphylococcal nuclease domain-containing protein 1"]
+        expected = ["Elastin microfibril interface-located protein 2",
+                "Nuclease domain-containing protein 1"]
+        for i, anno in enumerate(annos):
+            self.assertEqual(expected[i], fix_anno(anno))
 
     def test_contains_3_or_more_numbers_in_a_row(self):
         yes = ["abc123", "123", "2a2a22aa222aaa"]
@@ -35,11 +67,6 @@ class TestFix(unittest.TestCase):
         expected = "Neurogenic locus notch 3"
         actual = remove_protein_homolog(anno)
         self.assertEqual(expected, actual)
-
-    def test_fix_plural_no_change(self):
-        no_change = ["Protein crumbs", "PHD finger protein rhinoceros"]
-        for anno in no_change:
-            self.assertEqual(anno, fix_plural(anno))
 
     def test_remove_fragment(self):
         annos = ["kDa antigen (Fragment)", "Collagen alpha-2(I) chain (Fragments)", "Protein crumbs"]
