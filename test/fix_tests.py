@@ -3,7 +3,7 @@
 import unittest
 from src.fix import contains_3_or_more_numbers_in_a_row,\
         remove_protein_homolog, remove_fragment,\
-        remove_kDa, fix_anno
+        remove_kDa, remove_gene_optionally_followed_by_numbers, fix_anno
 
 class TestFix(unittest.TestCase):
 
@@ -88,6 +88,18 @@ class TestFix(unittest.TestCase):
                 "Protein crumbs"]
         for i, anno in enumerate(annos):
             self.assertEqual(expected[i], remove_kDa(anno))
+
+    def test_remove_gene_optionally_followed_by_numbers(self):
+        annos = ["Androgen-induced gene 1 protein",
+                "Meiotically up-regulated gene 147 protein",
+                "Myelin gene regulatory factor"]
+        expected = ["Androgen-induced protein",
+                "Meiotically up-regulated protein",
+                "Myelin regulatory factor"]
+        for i, anno in enumerate(annos):
+            self.assertEqual(expected[i], 
+                    remove_gene_optionally_followed_by_numbers(anno))
+
 
 ##########################
 def suite():

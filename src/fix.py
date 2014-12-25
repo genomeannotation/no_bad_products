@@ -5,11 +5,13 @@ from src.whitelist import whitelist
 from src.known_fixes import known_fixes
 
 def remove_extra_whitespace(line):
+    """Helper method"""
     # make sure we didn't leave extra whitespace
     fields = line.strip().split()
     return " ".join([f.strip() for f in fields])
 
 def contains_3_or_more_numbers_in_a_row(word):
+    """Helper method"""
     numcount = 0
     numrun = False
     for letter in word:
@@ -41,6 +43,10 @@ def remove_fragment(anno):
 def remove_kDa(anno):
     anno = re.sub("of [0-9]* kDa", "", anno)
     anno = re.sub("[0-9]* kDa", "", anno)
+    return remove_extra_whitespace(anno)
+
+def remove_gene_optionally_followed_by_numbers(anno):
+    anno = re.sub("gene [0-9]*", "", anno)
     return remove_extra_whitespace(anno)
 
 def fix_anno(anno):
