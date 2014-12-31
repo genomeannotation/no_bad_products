@@ -1,3 +1,4 @@
 *.pyc
 *__init__
 data/badproducts.bcur.tsa.12_17_2014
+BCUR_TRANSCRIPTOME*
