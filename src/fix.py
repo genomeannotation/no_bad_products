@@ -56,7 +56,6 @@ def remove_gene_optionally_followed_by_numbers(anno):
 def fix_anno(anno):
     # Do nothing if we know it's okay
     if anno in whitelist:
-        print("it's in the whitelist!" + anno)
         return anno
     # If we've fixed it by hand before, we know the answer
     elif anno in known_fixes:
