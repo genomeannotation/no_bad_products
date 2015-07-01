@@ -53,6 +53,11 @@ def remove_gene_optionally_followed_by_numbers(anno):
     anno = re.sub("gene [0-9]*", "", anno)
     return remove_extra_whitespace(anno)
 
+def remove_trailing_hyphens(anno):
+    if anno.endswith("-"):
+        anno = anno[:-1]
+    return anno
+
 def fix_anno(anno):
     # Do nothing if we know it's okay
     if anno in whitelist:
@@ -65,4 +70,5 @@ def fix_anno(anno):
         anno = remove_fragment(anno)
         anno = remove_protein_homolog(anno)
         anno = remove_kDa(anno)
+        anno = remove_trailing_hyphens(anno)
         return anno
